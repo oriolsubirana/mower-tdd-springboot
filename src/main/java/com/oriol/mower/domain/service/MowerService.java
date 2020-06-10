@@ -4,15 +4,18 @@ import com.oriol.mower.domain.model.Mower;
 
 public class MowerService {
 
+    private static final char LEFT = 'L';
+    private static final char RIGHT = 'R';
+
     public String process(String input, Mower mower) {
         for (char rotation : input.toCharArray()) {
-            if (rotation == 'L') {
+            if (rotation == LEFT) {
                 mower.spinLeft();
             }
-            if (rotation == 'R') {
+            if (rotation == RIGHT) {
                 mower.spinRight();
             }
         }
-        return "0 0 " + mower.getDirection();
+        return mower.toString();
     }
 }

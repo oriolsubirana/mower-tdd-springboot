@@ -2,37 +2,27 @@ package com.oriol.mower.domain.model;
 
 public class Mower {
 
-    String direction = "N";
+    Position position;
 
-    public String getDirection() {
-        return direction;
+    public Mower(Position position) {
+        this.position = position;
     }
 
-    public void setDirection(String direction) {
-        this.direction = direction;
+    public Position getPosition() {
+        return position;
     }
 
     public void spinLeft() {
-        if (direction == "N") {
-            direction = "W";
-        } else if (direction == "W") {
-            direction = "S";
-        } else if (direction == "S") {
-            direction = "E";
-        } else if (direction == "E") {
-            direction = "N";
-        }
+        this.position.spinLeft();
     }
 
     public void spinRight() {
-        if (direction == "N") {
-            direction = "E";
-        } else if (direction == "E") {
-            direction = "S";
-        } else if (direction == "S") {
-            direction = "W";
-        } else if (direction == "W") {
-            direction = "N";
-        }
+        this.position.spinRight();
     }
+
+    @Override
+    public String toString() {
+        return position.getX() + " " + position.getY() + " " + position.getDirectionCode();
+    }
+
 }

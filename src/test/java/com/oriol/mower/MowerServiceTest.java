@@ -1,6 +1,8 @@
 package com.oriol.mower;
 
+import com.oriol.mower.domain.model.Direction;
 import com.oriol.mower.domain.model.Mower;
+import com.oriol.mower.domain.model.Position;
 import com.oriol.mower.domain.service.MowerService;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
@@ -9,16 +11,19 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+
 @RunWith(JUnitParamsRunner.class)
 public class MowerServiceTest implements WithAssertions {
 
     private MowerService mowerService;
     private Mower mower;
+    private Position position;
 
     @Before
     public void setUp() {
         mowerService = new MowerService();
-        mower = new Mower();
+        position = new Position(0, 0, Direction.NORTH);
+        mower = new Mower(position);
     }
 
     @Test
