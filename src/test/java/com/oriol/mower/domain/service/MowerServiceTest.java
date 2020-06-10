@@ -1,10 +1,9 @@
-package com.oriol.mower;
+package com.oriol.mower.domain.service;
 
 import com.oriol.mower.domain.model.Direction;
 import com.oriol.mower.domain.model.Mower;
 import com.oriol.mower.domain.model.Plateau;
 import com.oriol.mower.domain.model.Position;
-import com.oriol.mower.domain.service.MowerService;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import org.assertj.core.api.WithAssertions;
@@ -110,6 +109,28 @@ public class MowerServiceTest implements WithAssertions {
     })
     public void mowerNotMoveOutOfBounds(String input, String output) throws Exception {
         Plateau plateau = new Plateau(8, 3);
+        assertThat(mowerService.process(input, mower, plateau)).isEqualTo(output);
+    }
+
+    @Test
+    @Parameters({
+            "LMLMLMLMM, 1 3 N",
+    })
+    public void mowerTestCase1(String input, String output) throws Exception {
+        Plateau plateau = new Plateau(5, 5);
+        Position position = new Position(1, 2, Direction.NORTH);
+        Mower mower = new Mower(position);
+        assertThat(mowerService.process(input, mower, plateau)).isEqualTo(output);
+    }
+
+    @Test
+    @Parameters({
+            "MMRMMRMRRM, 5 1 E",
+    })
+    public void mowerTestCase2(String input, String output) throws Exception {
+        Plateau plateau = new Plateau(5, 5);
+        Position position = new Position(3, 3, Direction.EAST);
+        Mower mower = new Mower(position);
         assertThat(mowerService.process(input, mower, plateau)).isEqualTo(output);
     }
 
