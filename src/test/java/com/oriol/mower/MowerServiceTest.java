@@ -2,6 +2,7 @@ package com.oriol.mower;
 
 import com.oriol.mower.domain.model.Direction;
 import com.oriol.mower.domain.model.Mower;
+import com.oriol.mower.domain.model.Plateau;
 import com.oriol.mower.domain.model.Position;
 import com.oriol.mower.domain.service.MowerService;
 import junitparams.JUnitParamsRunner;
@@ -18,12 +19,14 @@ public class MowerServiceTest implements WithAssertions {
     private MowerService mowerService;
     private Mower mower;
     private Position position;
+    private Plateau plateau;
 
     @Before
     public void setUp() {
         mowerService = new MowerService();
         position = new Position(0, 0, Direction.NORTH);
         mower = new Mower(position);
+        plateau = new Plateau(5, 5);
     }
 
     @Test
@@ -34,7 +37,7 @@ public class MowerServiceTest implements WithAssertions {
             "RRRR, 0 0 N"
     })
     public void mowerSpinClockwise(String input, String output) throws Exception {
-        assertThat(mowerService.process(input, mower)).isEqualTo(output);
+        assertThat(mowerService.process(input, mower, plateau)).isEqualTo(output);
     }
 
     @Test
@@ -45,7 +48,7 @@ public class MowerServiceTest implements WithAssertions {
             "LLLL, 0 0 N"
     })
     public void mowerSpinAntiClockwise(String input, String output) throws Exception {
-        assertThat(mowerService.process(input, mower)).isEqualTo(output);
+        assertThat(mowerService.process(input, mower, plateau)).isEqualTo(output);
     }
 
     @Test
@@ -57,7 +60,7 @@ public class MowerServiceTest implements WithAssertions {
             "MMMMM, 0 5 N",
     })
     public void mowerMoveNorth(String input, String output) throws Exception {
-        assertThat(mowerService.process(input, mower)).isEqualTo(output);
+        assertThat(mowerService.process(input, mower, plateau)).isEqualTo(output);
     }
 
     @Test
@@ -69,35 +72,45 @@ public class MowerServiceTest implements WithAssertions {
             "RMMMMM, 5 0 E",
     })
     public void mowerMoveEast(String input, String output) throws Exception {
-        assertThat(mowerService.process(input, mower)).isEqualTo(output);
+        assertThat(mowerService.process(input, mower, plateau)).isEqualTo(output);
     }
 
     @Test
     @Parameters({
-            "LM, 5 0 W",
-            "LMM, 4 0 W",
-            "LMMM, 3 0 W",
-            "LMMMM, 2 0 W",
-            "LMMMMM, 1 0 W",
+            "LM, 4 0 W",
+            "LMM, 3 0 W",
+            "LMMM, 2 0 W",
+            "LMMMM, 1 0 W",
     })
     public void mowerMoveWest(String input, String output) throws Exception {
-        Position position = new Position(6, 0, Direction.NORTH);
+        Position position = new Position(5, 0, Direction.NORTH);
         Mower mower = new Mower(position);
-        assertThat(mowerService.process(input, mower)).isEqualTo(output);
+        assertThat(mowerService.process(input, mower, plateau)).isEqualTo(output);
     }
 
     @Test
     @Parameters({
-            "LLM, 0 5 S",
-            "LLMM, 0 4 S",
-            "LLMMM, 0 3 S",
-            "LLMMMM, 0 2 S",
-            "LLMMMMM, 0 1 S",
+            "LLM, 0 4 S",
+            "LLMM, 0 3 S",
+            "LLMMM, 0 2 S",
+            "LLMMMM, 0 1 S",
     })
     public void mowerMoveSouth(String input, String output) throws Exception {
-        Position position = new Position(0, 6, Direction.NORTH);
+        Position position = new Position(0, 5, Direction.NORTH);
         Mower mower = new Mower(position);
-        assertThat(mowerService.process(input, mower)).isEqualTo(output);
+        assertThat(mowerService.process(input, mower, plateau)).isEqualTo(output);
+    }
+
+    @Test
+    @Parameters({
+            "MMMMMMMMMM, 0 3 N",
+            "RMMMMMMMMM, 8 0 E",
+            "LM, 0 0 W",
+            "LLM, 0 0 S",
+    })
+    public void mowerNotMoveOutOfBounds(String input, String output) throws Exception {
+        Plateau plateau = new Plateau(8, 3);
+        assertThat(mowerService.process(input, mower, plateau)).isEqualTo(output);
     }
 
 }

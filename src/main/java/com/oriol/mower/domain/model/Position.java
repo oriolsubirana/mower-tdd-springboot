@@ -36,22 +36,30 @@ public class Position {
         return direction.getShortCode();
     }
 
-    public Position changePosition() {
+    public Position changePosition(Plateau plateau) {
         int x = this.x;
         int y = this.y;
 
         switch (this.direction) {
             case NORTH:
-                y += 1;
+                if (y + 1 <= plateau.getHeight()) {
+                    y += 1;
+                }
                 break;
             case EAST:
-                x += 1;
+                if (x + 1 <= plateau.getWidth()) {
+                    x += 1;
+                }
                 break;
             case WEST:
-                x -= 1;
+                if (x - 1 >= 0) {
+                    x -= 1;
+                }
                 break;
             case SOUTH:
-                y -= 1;
+                if (y - 1 >= 0) {
+                    y -= 1;
+                }
                 break;
 
         }
