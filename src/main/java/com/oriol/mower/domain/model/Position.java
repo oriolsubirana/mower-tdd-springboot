@@ -35,4 +35,26 @@ public class Position {
     public String getDirectionCode() {
         return direction.getShortCode();
     }
+
+    public Position changePosition() {
+        int x = this.x;
+        int y = this.y;
+
+        switch (this.direction) {
+            case NORTH:
+                y += 1;
+                break;
+            case EAST:
+                x += 1;
+                break;
+            case WEST:
+                x -= 1;
+                break;
+            case SOUTH:
+                y -= 1;
+                break;
+
+        }
+        return new Position(x, y, this.direction);
+    }
 }

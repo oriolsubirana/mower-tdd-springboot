@@ -6,14 +6,18 @@ public class MowerService {
 
     private static final char LEFT = 'L';
     private static final char RIGHT = 'R';
+    private static final char MOVE = 'M';
 
     public String process(String input, Mower mower) {
-        for (char rotation : input.toCharArray()) {
-            if (rotation == LEFT) {
+        for (char command : input.toCharArray()) {
+            if (command == LEFT) {
                 mower.spinLeft();
             }
-            if (rotation == RIGHT) {
+            if (command == RIGHT) {
                 mower.spinRight();
+            }
+            if (command == MOVE) {
+                mower.move();
             }
         }
         return mower.toString();

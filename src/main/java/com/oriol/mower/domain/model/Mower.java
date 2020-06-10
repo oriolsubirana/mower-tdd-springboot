@@ -25,4 +25,7 @@ public class Mower {
         return position.getX() + " " + position.getY() + " " + position.getDirectionCode();
     }
 
+    public void move() {
+        this.position = position.changePosition();
+    }
 }
